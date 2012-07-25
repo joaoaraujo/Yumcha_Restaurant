@@ -1,0 +1,125 @@
+<div class="home" style="display:none; position:absolute; width:100%; height:100%;">
+
+<img src="css/logo.png" style="width:200px; height: 133px; margin-bottom: 45px;" alt="Yum Cha!" />
+<div class="cornerimage" style="position:absolute; right:2px; top:2px; width:81px; height:86px;"><img src="css/small_logo.jpg"></img></div>
+<div class="cornerimage" style="position:absolute; left:2px; top:2px; width:81px; height:86px;"><img src="css/small_logo.jpg"></img></div>
+<div class="headerimage" style="position:absolute; top:135px;"><img src="css/header.png"></img></div>
+<div class="footerimage" style="position:absolute; bottom:25px;"><img src="css/footer.png"></img></div>
+
+<div id="main">
+	<div class="main_image">
+		<img src="css/dimsum.png" alt="- dim sum" />
+		<div class="desc">
+			<!--a href="#" class="collapse">Close Me!</a-->
+			<div class="block">
+				<h2>Dim Sum</h2>
+				<p>Para quem est&aacute; farto de crepes chineses, h&oacute;stias de camar&atilde;o e wan tan frito...temos o tradicional Dim Sum!<br/><br/></p>
+			</div>
+		</div>
+
+	</div>
+	<div class="image_thumb">
+		<ul>
+			<li>
+				<a href="css/dimsum.png"><img src="css/dimsum_thumb.png" alt="Dim Sum"/></a>
+				<div class="block">
+					<h2>Dim Sum</h2>					
+					<p>Para quem est&aacute; farto de crepes chineses, h&oacute;stias de camar&atilde;o e wan tan frito...temos o tradicional Dim Sum!<br/><br/></p>
+				</div>
+			</li>
+			<li>
+				<a href="css/sopa.jpg"><img src="css/sopa_thumb.jpg" alt="Sopas" /></a>
+				<div class="block">
+					<h2>Sopa</h2>
+					<p>At&eacute; as sopas s&atilde;o diferentes...s&atilde;o tradicionais!<br/><br/></p>
+				</div>
+			</li>
+			<li>
+				<a href="css/pato.jpg"><img src="css/pato_thumb.jpg" alt="Pato a Pequim" /></a>
+
+				<div class="block">
+					<h2>Pato &agrave;<br>Pequim</h2>
+					<p>O delicioso Pato &agrave; Pequim, servido de uma forma &uacute;nica por n&oacute;s!<br/><br/></p>
+				</div>
+			</li>
+			<li>
+
+				<a href="css/marisco.jpg"><img src="css/marisco_thumb.jpg" alt="Marisco" /></a>
+				<div class="block">
+					<h2>Marisco</h2>
+					<p>&Eacute; na nossa gama de mariscos que melhor vai sentir o verdadeiro sabor oriental, lagostas, lagostins e caranguejos esperam o seu prato!<br/><br/></p>
+					</div>
+			</li>
+			<li>
+				<a href="css/pudim.png"><img src="css/pudim_thumb.png" alt="Pudim" /></a>
+				<div class="block">
+					<h2>Doces<br>t&iacute;picos</h2>
+					<p>Esque&ccedil;a o gelado frito, aqui temos realmente os doces do oriente!<br/><br/></p>
+					</div>
+
+			</li>
+		</ul>
+	</div>
+</div>
+</div>
+<script type="text/javascript">
+var interval
+$(document).ready(function() {	
+
+	//Show Banner
+	$(".main_image .desc").show(); //Show Banner
+	$(".main_image .block").animate({ opacity: 0.85 }, 1 ); //Set Opacity
+
+	//Click and Hover events for thumbnail list
+	$(".image_thumb ul li:first").addClass('active'); 
+	
+	$(".image_thumb ul li").click(function(){ 
+		//Set Variables
+		window.clearInterval(interval);
+		
+		var imgAlt = $(this).find('img').attr("alt"); //Get Alt Tag of Image
+		var imgTitle = $(this).find('a').attr("href"); //Get Main Image URL
+		var imgDesc = $(this).find('.block').html(); 	//Get HTML of block
+		var imgDescHeight = $(".main_image").find('.block').height();	//Calculate height of block	
+		
+		if ($(this).is(".active")) {  //If it's already active, then...
+			return false; // Don't click through
+		} else {
+			//Animate the Teaser				
+			$(".main_image .block").animate({ opacity: 0, marginBottom: -imgDescHeight }, 250 , function() {
+				$(".main_image .block").html(imgDesc).animate({ opacity: 0.85,	marginBottom: "0" }, 250 );
+				$(".main_image img").attr({ src: imgTitle , alt: imgAlt});
+			});
+		}
+		
+		$(".image_thumb ul li").removeClass('active'); //Remove class of 'active' on all lists
+		$(this).addClass('active');  //add class of 'active' on this list only
+		
+		interval = window.setInterval('rotate()',5000);
+		
+		return false;
+		
+	}) .hover(function(){
+		$(this).addClass('hover');
+		}, function() {
+		$(this).removeClass('hover');
+	});
+			
+	//Toggle Teaser
+	/*$("a.collapse").click(function(){
+		$(".main_image .block").slideToggle();
+		$("a.collapse").toggleClass("show");
+	});*/
+	
+	interval = window.setInterval('rotate()',5000);
+	
+});//Close Function
+
+function rotate()
+{
+if($("li.active").next().length > 0)
+	$("li.active").next().trigger("click")
+else
+	$(".image_thumb ul li:first").trigger("click")
+}
+</script>
